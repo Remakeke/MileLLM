@@ -1,0 +1,149 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a hardware architecture analyst.
+Your role is to analyze how structural characteristics of hardware influence performance.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing CPUs with architectural and structural attributes.
+
+The learning objective is to support prediction by constructing derived features
+that capture hardware structure.
+
+Focus on variables such as cores, threads, and CPU architecture identifiers.
+
+In particular, consider how structural factors interact
+to reflect parallelism, scalability, and architectural capability.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"cpuName": "Name or model identifier of the CPU, representing architecture generation and product family",
+"socket": "Type of CPU socket, indicating platform compatibility and architectural class",
+"TDP": "Thermal Design Power in watts, representing the maximum heat dissipation and power consumption level",
+"powerPerf": "Power-performance ratio, indicating efficiency of performance relative to power consumption",
+"testDate": "Date when the CPU was benchmarked, reflecting technological generation and temporal trend",
+"price": "Market price of the CPU, representing economic cost",
+"cores": "Number of physical cores, representing parallel processing capability",
+"threadValue": "Performance score per thread, indicating efficiency of single-thread execution",
+"cpuValue": "Performance score per cost unit, representing value efficiency",
+"cpuMark": "Overall CPU benchmark score, representing aggregate performance",
+"threadMark": "Single-thread benchmark score, representing per-core performance capability"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: cpuName
+Variance = 1219537.5000
+Correlation = 0.3339
+Mutual Information = 1.1282
+RF Importance = 0.2666
+
+Feature: socket
+Variance = 3881.7926
+Correlation = 0.3874
+Mutual Information = 0.9412
+RF Importance = 0.1453
+
+Feature: TDP
+Variance = 1856.3838
+Correlation = 0.0992
+Mutual Information = 0.7210
+RF Importance = 0.1921
+
+Feature: powerPerf
+Variance = 899586.5803
+Correlation = 0.2012
+Mutual Information = 0.3099
+RF Importance = 0.0733
+
+Feature: testDate
+Variance = 21.1381
+Correlation = 0.1938
+Mutual Information = 0.2724
+RF Importance = 0.0722
+
+Feature: price
+Variance = 423342.2676
+Correlation = 0.2004
+Mutual Information = 0.2706
+RF Importance = 0.0304
+
+Feature: cores
+Variance = 38.2645
+Correlation = 0.2235
+Mutual Information = 0.2656
+RF Importance = 0.0409
+
+Feature: threadValue
+Variance = 164.8615
+Correlation = -0.1636
+Mutual Information = 0.2357
+RF Importance = 0.0290
+
+Feature: cpuValue
+Variance = 659.3614
+Correlation = -0.0532
+Mutual Information = 0.2104
+RF Importance = 0.0286
+
+Feature: cpuMark
+Variance = 92497296.4566
+Correlation = 0.0439
+Mutual Information = 0.1790
+RF Importance = 0.0612
+
+Feature: threadMark
+Variance = 665313.5164
+Correlation = -0.1860
+Mutual Information = 0.1161
+RF Importance = 0.0604
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

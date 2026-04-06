@@ -1,0 +1,188 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a growth performance analyst.
+Your role is to quantify the overall growth strength and productivity of plants.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing eucalyptus growth and performance indicators.
+
+The learning objective is to support prediction by constructing derived features
+that capture growth intensity and performance.
+
+Focus on how variables such as diameter (DBH), height (Ht), survival, and vigour
+interact.
+
+In particular, consider nonlinear combinations or amplifications
+that reflect strong or weak growth patterns.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Abbrev": "site abbreviation",
+"Rep": "site rep",
+"Locality": "site locality in the North Island",
+"Map_Ref": "map location in the North Island",
+"Latitude": "latitude approximation",
+"Altitude": "altitude approximation",
+"Rainfall": "rainfall (mm pa)",
+"Frosts": "frosts (deg. c)",
+"Year": "year of planting",
+"Sp": "species code",
+"PMCno": "seedlot number",
+"DBH": "best diameter base height (cm)",
+"Ht": "height (m)",
+"Surv": "survival",
+"Vig": "vigour",
+"Ins_res": "insect resistance",
+"Stem_Fm": "stem form",
+"Crown_Fm": "crown form",
+"Brnch_Fm": "branch form",
+"Utility": "utility rating"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: Vig
+Variance = 0.9301
+Correlation = -0.4791
+Mutual Information = 0.6602
+
+Feature: Ins_res
+Variance = 0.6050
+Correlation = -0.3147
+Mutual Information = 0.3270
+
+Feature: PMCno
+Variance = 378825.8265
+Correlation = 0.0424
+Mutual Information = 0.3179
+
+Feature: Map_Ref
+Variance = 13.4406
+Correlation = -0.0888
+Mutual Information = 0.2844
+
+Feature: Abbrev
+Variance = 18.5426
+Correlation = 0.0815
+Mutual Information = 0.2839
+
+Feature: Stem_Fm
+Variance = 0.4616
+Correlation = -0.2462
+Mutual Information = 0.2700
+
+Feature: Rainfall
+Variance = 20975.7185
+Correlation = -0.1853
+Mutual Information = 0.2677
+
+Feature: Crown_Fm
+Variance = 0.5117
+Correlation = -0.2111
+Mutual Information = 0.2248
+
+Feature: Latitude
+Variance = 8.2299
+Correlation = -0.0764
+Mutual Information = 0.2237
+
+Feature: Surv
+Variance = 833.4293
+Correlation = -0.1653
+Mutual Information = 0.2100
+
+Feature: Sp
+Variance = 52.5166
+Correlation = 0.0155
+Mutual Information = 0.2065
+
+Feature: DBH
+Variance = 2404744.3868
+Correlation = -0.0308
+Mutual Information = 0.2034
+
+Feature: Year
+Variance = 2.5242
+Correlation = 0.3004
+Mutual Information = 0.2025
+
+Feature: Ht
+Variance = 16.8278
+Correlation = -0.2478
+Mutual Information = 0.1930
+
+Feature: Brnch_Fm
+Variance = 0.5620
+Correlation = -0.0868
+Mutual Information = 0.1719
+
+Feature: Locality
+Variance = 4.4971
+Correlation = -0.2385
+Mutual Information = 0.1711
+
+Feature: Altitude
+Variance = 3506.2361
+Correlation = -0.0377
+Mutual Information = 0.0947
+
+Feature: Rep
+Variance = 1.2197
+Correlation = -0.0376
+Mutual Information = 0.0000
+
+Feature: Frosts
+Variance = 0.2432
+Correlation = 0.1195
+Mutual Information = 0.0000
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 4 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

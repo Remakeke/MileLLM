@@ -1,0 +1,171 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a risk stratification analyst.
+Your role is to analyze how demographic and clinical factors influence outcomes.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing patient characteristics and outcomes.
+
+The learning objective is to support prediction by constructing derived features
+that capture risk patterns.
+
+Focus on variables such as age, sex, diagnosis, and event indicators.
+
+In particular, consider how these factors interact
+to reflect differences in risk and prognosis.
+
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"start": "Start time of observation or follow-up period",
+"pcdx": "Primary diagnosis indicator or disease classification",
+"event": "Event occurrence indicator (e.g., death or failure)",
+"stop": "End time of observation or follow-up period",
+"sex": "Biological sex of the individual",
+"age": "Age of the individual",
+"creat": "Serum creatinine level, indicating kidney function",
+"Unnamed: 0": "Index or identifier column with no intrinsic meaning",
+"id": "Unique identifier for each individual",
+"dxyr": "Year of diagnosis",
+"alb": "Serum albumin level, indicating nutritional and health status",
+"hgb": "Hemoglobin level, indicating blood oxygen capacity",
+"mspike": "Monoclonal protein level, associated with plasma disorders",
+"status": "Outcome status indicator (e.g., alive/deceased or disease progression)"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: start
+Variance = 4728594.6965
+Correlation = 0.8143
+Mutual Information = 0.5004
+RF Importance = 0.5480
+
+Feature: pcdx
+Variance = 1.1362
+Correlation = -0.4610
+Mutual Information = 0.2288
+RF Importance = 0.2295
+
+Feature: event
+Variance = 0.2383
+Correlation = -0.1994
+Mutual Information = 0.0788
+RF Importance = 0.1142
+
+Feature: stop
+Variance = 12618278.7925
+Correlation = 0.1037
+Mutual Information = 0.0277
+RF Importance = 0.0310
+
+Feature: sex
+Variance = 0.2482
+Correlation = -0.0688
+Mutual Information = 0.0242
+RF Importance = 0.0012
+
+Feature: age
+Variance = 133.0686
+Correlation = -0.1837
+Mutual Information = 0.0093
+RF Importance = 0.0136
+
+Feature: creat
+Variance = 0.2124
+Correlation = -0.0712
+Mutual Information = 0.0071
+RF Importance = 0.0038
+
+Feature: Unnamed: 0
+Variance = 7777.5000
+Correlation = -0.0188
+Mutual Information = 0.0000
+RF Importance = 0.0154
+
+Feature: id
+Variance = 4875.7180
+Correlation = -0.0217
+Mutual Information = 0.0000
+RF Importance = 0.0096
+
+Feature: dxyr
+Variance = 9.5524
+Correlation = -0.1088
+Mutual Information = 0.0000
+RF Importance = 0.0153
+
+Feature: alb
+Variance = 0.2021
+Correlation = 0.0556
+Mutual Information = 0.0000
+RF Importance = 0.0051
+
+Feature: hgb
+Variance = 2.5643
+Correlation = 0.0293
+Mutual Information = 0.0000
+RF Importance = 0.0066
+
+Feature: mspike
+Variance = 0.1676
+Correlation = -0.0637
+Mutual Information = 0.0000
+RF Importance = 0.0060
+
+Feature: status
+Variance = 0.0499
+Correlation = 0.0490
+Mutual Information = 0.0000
+RF Importance = 0.0007
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

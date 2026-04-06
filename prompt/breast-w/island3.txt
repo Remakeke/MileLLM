@@ -1,0 +1,128 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a cellular feature distribution analyst.
+Your role is to analyze the relative balance and proportional relationships
+among different cytological features.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset of breast cancer cell samples described by cytological features.
+
+The learning objective is to support classification by constructing derived features
+that capture distributional patterns and relative imbalances among features.
+
+Focus on ratios, normalized relationships, and contrasts between features,
+such as the balance between cell size and shape uniformity, or nuclei-related features.
+
+In particular, consider how disproportion or imbalance across features
+may signal abnormal cellular states.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Clump_Thickness": "Measure of thickness of cell clusters, scaled to 10 distinct levels",
+"Cell_Size_Uniformity": "Uniformity in size of the cells, scaled to 10 distinct levels",
+"Cell_Shape_Uniformity": "Uniformity in shape of the cells, scaled to 10 distinct levels",
+"Marginal_Adhesion": "Adhesion of cells at their margins, scaled to 10 distinct levels",
+"Single_Epi_Cell_Size": "Size of epithelial cells, scaled to 10 distinct levels",
+"Bare_Nuclei": "Count of nuclei without cytoplasm, scaled to 10 distinct levels (16 missing values)",
+"Bland_Chromatin": "Texture of chromatin in the cell nucleus, scaled to 10 distinct levels",
+"Normal_Nucleoli": "Presence of nucleoli in the nucleus, scaled to 10 distinct levels",
+"Mitoses": "Frequency of mitotic cell division, scaled to 9 distinct levels"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: Clump_Thickness
+Variance = 7.9284
+Correlation = 0.7160
+Mutual Information = 0.3172
+
+Feature: Cell_Size_Uniformity
+Variance = 9.3114
+Correlation = 0.8179
+Mutual Information = 0.4604
+
+Feature: Cell_Shape_Uniformity
+Variance = 8.8323
+Correlation = 0.8189
+Mutual Information = 0.4586
+
+Feature: Marginal_Adhesion
+Variance = 8.1532
+Correlation = 0.6968
+Mutual Information = 0.3197
+
+Feature: Single_Epi_Cell_Size
+Variance = 4.9031
+Correlation = 0.6828
+Mutual Information = 0.3463
+
+Feature: Bare_Nuclei
+Variance = 12.9733
+Correlation = 0.8160
+Mutual Information = 0.4019
+
+Feature: Bland_Chromatin
+Variance = 5.9456
+Correlation = 0.7566
+Mutual Information = 0.3728
+
+Feature: Normal_Nucleoli
+Variance = 9.3247
+Correlation = 0.7122
+Mutual Information = 0.3327
+
+Feature: Mitoses
+Variance = 2.9415
+Correlation = 0.4232
+Mutual Information = 0.1379
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

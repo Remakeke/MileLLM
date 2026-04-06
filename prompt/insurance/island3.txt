@@ -1,0 +1,114 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a socio-demographic interaction analyst.
+Your role is to analyze how demographic attributes interact to influence outcomes.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing individuals with demographic characteristics.
+
+The learning objective is to support prediction by constructing derived features
+that capture demographic interactions.
+
+Focus on variables such as sex, region, and family structure.
+
+In particular, consider how these variables interact with each other
+and with risk-related features.
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"age":"age of primary beneficiary",
+"sex":"insurance contractor gender, female, male",
+"bmi":"Body mass index",
+"children":"Number of children covered by health insurance / Number of dependents",
+"smoker":"Smoking",
+"region":"the beneficiary's residential area in the US, northeast, southeast, southwest, northwest."
+
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: age
+Variance = 197.4014
+Correlation = 0.2990
+Mutual Information = 1.4980
+RF Importance = 0.1311
+
+Feature: smoker
+Variance = 0.1630
+Correlation = 0.7873
+Mutual Information = 0.3692
+RF Importance = 0.6199
+
+Feature: sex
+Variance = 0.2502
+Correlation = 0.0573
+Mutual Information = 0.1767
+RF Importance = 0.0058
+
+Feature: children
+Variance = 1.4532
+Correlation = 0.0680
+Mutual Information = 0.1617
+RF Importance = 0.0197
+
+Feature: region
+Variance = 1.2208
+Correlation = -0.0062
+Mutual Information = 0.0763
+RF Importance = 0.0141
+
+Feature: bmi
+Variance = 37.1879
+Correlation = 0.1983
+Mutual Information = 0.0735
+RF Importance = 0.2093
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 2 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

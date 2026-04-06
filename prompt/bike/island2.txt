@@ -1,0 +1,156 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of an environmental comfort and perception analyst.
+Your role is to analyze how environmental conditions influence human perception and behavior.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing bike-sharing usage with environmental measurements.
+
+The learning objective is to support prediction by constructing derived features
+that capture perceived environmental comfort.
+
+Focus on variables such as temperature, feeling temperature, humidity, and wind speed.
+
+In particular, consider how these variables interact to represent perceived comfort,
+rather than raw environmental measurements alone.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"season": "season (1:springer, 2:summer, 3:fall, 4:winter)",
+"yr": "year (0: 2011, 1:2012)",
+"mnth": "month ( 1 to 12)",
+"hr": "hour (0 to 23)",
+"holiday": "whether day is holiday or not",
+"weekday": "day of the week",
+"workingday": "if day is neither weekend nor holiday is 1, otherwise is 0.",
+"weathersit": "1: Clear, Few clouds, Partly cloudy, Partly cloudy, 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist, 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds, 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog",
+"temp": "Normalized temperature in Celsius. The values are derived via (t-t_min)/(t_max-t_min), t_min=-8, t_max=+39 (only in hourly scale)",
+"atemp": "Normalized feeling temperature in Celsius. The values are derived via (t-t_min)/(t_max-t_min), t_min=-16, t_max=+50 (only in hourly scale)",
+"hum": "Normalized humidity. The values are divided to 100 (max)",
+"windspeed": "Normalized wind speed. The values are divided to 67 (max)"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: hr
+Variance = 47.8090
+Correlation = 0.3941
+Mutual Information = 0.6265
+RF Importance = 0.6140
+
+Feature: temp
+Variance = 0.0371
+Correlation = 0.4048
+Mutual Information = 0.1457
+RF Importance = 0.1219
+
+Feature: atemp
+Variance = 0.0295
+Correlation = 0.4009
+Mutual Information = 0.1384
+RF Importance = 0.0199
+
+Feature: hum
+Variance = 0.0372
+Correlation = -0.3229
+Mutual Information = 0.1010
+RF Importance = 0.0268
+
+Feature: mnth
+Variance = 11.8252
+Correlation = 0.1206
+Mutual Information = 0.0695
+RF Importance = 0.0156
+
+Feature: season
+Variance = 1.2253
+Correlation = 0.1781
+Mutual Information = 0.0563
+RF Importance = 0.0222
+
+Feature: yr
+Variance = 0.2500
+Correlation = 0.2505
+Mutual Information = 0.0444
+RF Importance = 0.0795
+
+Feature: windspeed
+Variance = 0.0150
+Correlation = 0.0932
+Mutual Information = 0.0208
+RF Importance = 0.0100
+
+Feature: weekday
+Variance = 4.0231
+Correlation = 0.0269
+Mutual Information = 0.0157
+RF Importance = 0.0131
+
+Feature: weathersit
+Variance = 0.4088
+Correlation = -0.1424
+Mutual Information = 0.0132
+RF Importance = 0.0183
+
+Feature: workingday
+Variance = 0.2166
+Correlation = 0.0303
+Mutual Information = 0.0096
+RF Importance = 0.0560
+
+Feature: holiday
+Variance = 0.0279
+Correlation = -0.0309
+Mutual Information = 0.0000
+RF Importance = 0.0026
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

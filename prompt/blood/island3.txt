@@ -1,0 +1,98 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a behavioral efficiency analyst.
+Your role is to analyze normalized activity patterns and behavioral efficiency.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset of blood donation records described by temporal and behavioral features.
+
+The learning objective is to support classification by constructing derived features
+that capture activity rates and efficiency.
+
+Focus on ratios such as activity per unit time, volume per donation,
+and recency-adjusted activity levels.
+
+In particular, consider how efficiency and consistency of behavior
+differentiate between active and inactive individuals.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Recency": "months since last donation",
+"Frequency": "total number of donation",
+"Monetary": "total blood donated in c.c.",
+"Time": "months since first donation"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: Recency
+Variance = 65.5354
+Correlation = -0.2799
+Mutual Information = 0.0311
+
+Feature: Frequency
+Variance = 34.0975
+Correlation = 0.2186
+Mutual Information = 0.0364
+
+Feature: Monetary
+Variance = 2131094.2299
+Correlation = 0.2186
+Mutual Information = 0.0288
+
+Feature: Time
+Variance = 594.2242
+Correlation = -0.0359
+Mutual Information = 0.0000
+
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 2 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

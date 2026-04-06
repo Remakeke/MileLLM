@@ -1,0 +1,107 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a boundary layer and turbulence analyst.
+Your role is to analyze how viscous effects influence aerodynamic outcomes.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing airfoil behavior with boundary layer characteristics.
+
+The learning objective is to support prediction by constructing derived features
+that capture turbulence and viscous effects.
+
+Focus on variables such as boundary layer thickness and chord length.
+
+In particular, consider how these variables interact
+to reflect turbulence intensity, flow separation, or energy dissipation.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"f": "Frequency of the sound wave in Hertz, representing oscillation rate of aerodynamic noise",
+"delta": "Boundary layer thickness in meters, indicating the thickness of the viscous flow region near the airfoil surface",
+"alpha": "Angle of attack in degrees, representing the angle between the incoming airflow and the airfoil chord",
+"c": "Chord length in meters, representing the characteristic length of the airfoil",
+"U_infinity": "Free-stream velocity in meters per second, representing the speed of airflow approaching the airfoil"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: f
+Variance = 9938717.3837
+Correlation = -0.3907
+Mutual Information = 0.1856
+RF Importance = 0.3926
+
+Feature: delta
+Variance = 0.0002
+Correlation = -0.3127
+Mutual Information = 0.1681
+RF Importance = 0.4255
+
+Feature: alpha
+Variance = 35.0242
+Correlation = -0.1561
+Mutual Information = 0.1068
+RF Importance = 0.0430
+
+Feature: c
+Variance = 0.0087
+Correlation = -0.2362
+Mutual Information = 0.0881
+RF Importance = 0.0954
+
+Feature: U_infinity
+Variance = 242.5116
+Correlation = 0.1251
+Mutual Information = 0.0353
+RF Importance = 0.0434
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 2 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

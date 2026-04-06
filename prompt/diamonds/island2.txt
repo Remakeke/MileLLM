@@ -1,0 +1,336 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a quality and grading analyst.
+Your role is to analyze how qualitative attributes influence perceived value.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing diamonds with grading attributes.
+
+The learning objective is to support prediction by constructing derived features
+that capture quality differences.
+
+Focus on variables such as clarity, cut, and color.
+
+In particular, consider how these categorical attributes interact
+to reflect perceived quality and desirability.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"checking_status":"Status of existing checking account, in Deutsche Mark.",
+"duration":"Duration in months",
+"credit_history":"Credit history",
+"purpose":"Purpose of the credit",
+"credit_amount":"Credit amount",
+"savings_status":"Status of savings account/bonds, in Deutsche Mark.",
+"employment":"Present employment, in number of years.",
+"installment_commitment":"Installment rate in percentage of disposable income",
+"personal_status":"Personal status (married, single,...) and sex",
+"other_parties":"Other debtors / guarantors",
+"residence_since":"Present residence since X years",
+"property_magnitude":"Property (e.g. real estate)",
+"age":"Age in years",
+"other_payment_plans":"Other installment plans (banks, stores)",
+"housing":"Housing (rent, own,...)",
+"existing_credits":"Number of existing credits at this bank",
+"job":"Job",
+"num_dependents":"Number of people being liable to provide maintenance for",
+"own_telephone":"Telephone",
+"foreign_worker":"Foreign worker"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: checking_status
+Variance = 1.5708
+Correlation = 0.3024
+Mutual Information = 0.0747
+
+Feature: savings_status
+Variance = 1.2352
+Correlation = 0.1031
+Mutual Information = 0.0357
+
+Feature: credit_history
+Variance = 1.1322
+Correlation = -0.0971
+Mutual Information = 0.0276
+
+Feature: other_payment_plans
+Variance = 0.1777
+Correlation = 0.0539
+Mutual Information = 0.0220
+
+Feature: existing_credits
+Variance = 0.3337
+Correlation = 0.0457
+Mutual Information = 0.0207
+
+Feature: installment_commitment
+Variance = 1.2515
+Correlation = -0.0724
+Mutual Information = 0.0147
+
+Feature: credit_amount
+Variance = 7967843.4709
+Correlation = -0.1547
+Mutual Information = 0.0137
+
+Feature: age
+Variance = 129.4013
+Correlation = 0.0911
+Mutual Information = 0.0133
+
+Feature: purpose
+Variance = 5.8616
+Correlation = 0.1382
+Mutual Information = 0.0120
+
+Feature: duration
+Variance = 145.4150
+Correlation = -0.2149
+Mutual Information = 0.0089
+
+Feature: housing
+Variance = 0.2822
+Correlation = -0.0193
+Mutual Information = 0.0089
+
+Feature: num_dependents
+Variance = 0.1311
+Correlation = 0.0030
+Mutual Information = 0.0064
+
+Feature: other_parties
+Variance = 0.1982
+Correlation = 0.0284
+Mutual Information = 0.0054
+
+Feature: own_telephone
+Variance = 0.2410
+Correlation = 0.0365
+Mutual Information = 0.0000
+
+Feature: job
+Variance = 0.8958
+Correlation = 0.0328
+Mutual Information = 0.0000
+
+Feature: residence_since
+Variance = 1.2182
+Correlation = -0.0030
+Mutual Information = 0.0000
+
+Feature: property_magnitude
+Variance = 1.4665
+Correlation = 0.0555
+Mutual Information = 0.0000
+
+Feature: personal_status
+Variance = 1.8249
+Correlation = 0.0895
+Mutual Information = 0.0000
+
+Feature: employment
+Variance = 1.8072
+Correlation = -0.0089
+Mutual Information = 0.0000
+
+Feature: foreign_worker
+Variance = 0.0357
+Correlation = -0.0821
+Mutual Information = 0.0000
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 4 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a financial burden structure analyst.
+Your role is to analyze how financial obligations are structured
+and how debt-related variables interact to represent financial pressure.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing individuals applying for credit,
+with features related to financial status and loan characteristics.
+
+The learning objective is to support classification by constructing derived features
+that capture financial burden and repayment pressure.
+
+Focus on how credit amount, duration, and installment commitment
+jointly determine the structure of financial obligations.
+
+In particular, consider how normalized or interaction-based features
+reflect the intensity and distribution of financial burden.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"carat": "Weight of the diamond measured in carats, representing overall size",
+"x": "Length of the diamond in millimeters, representing physical dimension along one axis",
+"y": "Width of the diamond in millimeters, representing physical dimension along another axis",
+"price": "Market price of the diamond, representing economic value",
+"Unnamed: 0": "Index or identifier column with no intrinsic physical meaning",
+"depth": "Total depth percentage, representing height relative to width",
+"clarity": "Clarity grade, indicating the presence of internal inclusions or imperfections",
+"table": "Width of the diamond's top facet relative to its widest point",
+"cut": "Quality of the cut, representing how well the diamond reflects light",
+"color": "Color grade, representing the absence of color (whiteness) in the diamond"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: carat
+Variance = 0.2247
+Correlation = 0.9534
+Mutual Information = 2.5299
+RF Importance = 0.9394
+
+Feature: x
+Variance = 1.2583
+Correlation = 0.9708
+Mutual Information = 2.1219
+RF Importance = 0.0126
+
+Feature: y
+Variance = 1.3045
+Correlation = 0.9520
+Mutual Information = 2.0877
+RF Importance = 0.0063
+
+Feature: price
+Variance = 15915629.4243
+Correlation = 0.8612
+Mutual Information = 1.4334
+RF Importance = 0.0044
+
+Feature: Unnamed: 0
+Variance = 242464795.0000
+Correlation = -0.3992
+Mutual Information = 1.2306
+RF Importance = 0.0033
+
+Feature: depth
+Variance = 2.0524
+Correlation = 0.0949
+Mutual Information = 0.2218
+RF Importance = 0.0068
+
+Feature: clarity
+Variance = 2.9742
+Correlation = -0.2243
+Mutual Information = 0.1209
+RF Importance = 0.0019
+
+Feature: table
+Variance = 4.9929
+Correlation = 0.1509
+Mutual Information = 0.0872
+RF Importance = 0.0174
+
+Feature: cut
+Variance = 1.0562
+Correlation = 0.0020
+Mutual Information = 0.0715
+RF Importance = 0.0073
+
+Feature: color
+Variance = 2.8938
+Correlation = 0.2682
+Mutual Information = 0.0683
+RF Importance = 0.0006
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

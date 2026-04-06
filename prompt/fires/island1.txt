@@ -1,0 +1,158 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a fire potential analyst.
+Your role is to evaluate the likelihood of ignition based on environmental conditions.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing forest fire conditions using environmental indices.
+
+The learning objective is to support prediction by constructing derived features
+that capture the potential for fire ignition.
+
+Focus on indices such as FFMC, DMC, and DC,
+which describe fuel dryness and flammability.
+
+In particular, consider how combinations of these indices
+reflect overall fire potential or accumulated dryness.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"X":"x-axis spatial coordinate within the Montesinho park map",
+"Y":"y-axis spatial coordinate within the Montesinho park map",
+"month":"month of the year",
+"day":"day of the week",
+"FFMC":"FFMC index from the FWI system",
+"DMC":"DMC index from the FWI system",
+"DC":"DC index from the FWI system",
+"ISI":"ISI index from the FWI system",
+"temp":"temperature in Celsius degrees",
+"RH":"relative humidity in %",
+"wind":"wind speed in km/h",
+"rain":"outside rain in mm/m2",
+"area":"the burned area of the forest (in ha)"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: DC
+Variance = 61536.8355
+Correlation = 0.0494
+Mutual Information = 0.0632
+RF Importance = 0.0454
+
+Feature: month
+Variance = 19.1255
+Correlation = 0.0311
+Mutual Information = 0.0492
+RF Importance = 0.0075
+
+Feature: ISI
+Variance = 20.7888
+Correlation = 0.0083
+Mutual Information = 0.0458
+RF Importance = 0.0411
+
+Feature: rain
+Variance = 0.0876
+Correlation = -0.0074
+Mutual Information = 0.0433
+RF Importance = 0.0005
+
+Feature: RH
+Variance = 266.2598
+Correlation = -0.0755
+Mutual Information = 0.0292
+RF Importance = 0.0723
+
+Feature: DMC
+Variance = 4101.9519
+Correlation = 0.0730
+Mutual Information = 0.0216
+RF Importance = 0.1468
+
+Feature: temp
+Variance = 33.7169
+Correlation = 0.0978
+Mutual Information = 0.0144
+RF Importance = 0.4801
+
+Feature: Y
+Variance = 1.5127
+Correlation = 0.0449
+Mutual Information = 0.0016
+RF Importance = 0.0353
+
+Feature: X
+Variance = 5.3536
+Correlation = 0.0634
+Mutual Information = 0.0000
+RF Importance = 0.0492
+
+Feature: day
+Variance = 3.7059
+Correlation = 0.0189
+Mutual Information = 0.0000
+RF Importance = 0.0211
+
+Feature: FFMC
+Variance = 30.4716
+Correlation = 0.0401
+Mutual Information = 0.0000
+RF Importance = 0.0451
+
+Feature: wind
+Variance = 3.2100
+Correlation = 0.0123
+Mutual Information = 0.0000
+RF Importance = 0.0554
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>
