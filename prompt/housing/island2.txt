@@ -1,0 +1,135 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a housing density analyst.
+Your role is to analyze how population and housing resources are distributed.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing housing blocks with population and housing attributes.
+
+The learning objective is to support prediction by constructing derived features
+that capture density, occupancy, and crowding patterns.
+
+Focus on variables such as population, households, total rooms, and bedrooms.
+
+In particular, consider ratios and normalized measures
+that reflect how densely people occupy available housing resources.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"longitude":"A measure of how far west a house is; a higher value is farther west",
+"latitude":"A measure of how far north a house is; a higher value is farther north",
+"housing_median_age":"Median age of a house within a block; a lower number is a newer building",
+"total_rooms":"Total number of rooms within a block",
+"total_bedrooms":"Total number of bedrooms within a block",
+"population":"Total number of people residing within a block",
+"households":"Total number of households, a group of people residing within a home unit, for a block",
+"median_income":"Median income for households within a block of houses (measured in tens of thousands of US Dollars)",
+"ocean_proximity":"Location of the house w.r.t ocean/sea"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: longitude
+Variance = 4.0141
+Correlation = -0.0460
+Mutual Information = 0.4024
+RF Importance = 0.1099
+
+Feature: median_income
+Variance = 3.6093
+Correlation = 0.6881
+Mutual Information = 0.3877
+RF Importance = 0.5126
+
+Feature: latitude
+Variance = 4.5623
+Correlation = -0.1442
+Mutual Information = 0.3690
+RF Importance = 0.1132
+
+Feature: ocean_proximity
+Variance = 2.0183
+Correlation = 0.0818
+Mutual Information = 0.2110
+RF Importance = 0.1129
+
+Feature: total_rooms
+Variance = 4759445.1059
+Correlation = 0.1342
+Mutual Information = 0.0420
+RF Importance = 0.0250
+
+Feature: households
+Variance = 146176.0399
+Correlation = 0.0658
+Mutual Information = 0.0290
+RF Importance = 0.0194
+
+Feature: housing_median_age
+Variance = 158.3963
+Correlation = 0.1056
+Mutual Information = 0.0289
+RF Importance = 0.0532
+
+Feature: total_bedrooms
+Variance = 175784.4754
+Correlation = 0.0495
+Mutual Information = 0.0262
+RF Importance = 0.0223
+
+Feature: population
+Variance = 1282470.4572
+Correlation = -0.0246
+Mutual Information = 0.0216
+RF Importance = 0.0316
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

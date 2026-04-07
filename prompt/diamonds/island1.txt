@@ -1,0 +1,142 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a physical size and geometry analyst.
+Your role is to analyze how geometric and size-related properties influence value.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing diamonds with physical dimensions.
+
+The learning objective is to support prediction by constructing derived features
+that capture geometric structure.
+
+Focus on variables such as carat, length, and width.
+
+In particular, consider how size-related variables interact
+to reflect volume, proportions, and overall scale.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"carat": "Weight of the diamond measured in carats, representing overall size",
+"x": "Length of the diamond in millimeters, representing physical dimension along one axis",
+"y": "Width of the diamond in millimeters, representing physical dimension along another axis",
+"price": "Market price of the diamond, representing economic value",
+"Unnamed: 0": "Index or identifier column with no intrinsic physical meaning",
+"depth": "Total depth percentage, representing height relative to width",
+"clarity": "Clarity grade, indicating the presence of internal inclusions or imperfections",
+"table": "Width of the diamond's top facet relative to its widest point",
+"cut": "Quality of the cut, representing how well the diamond reflects light",
+"color": "Color grade, representing the absence of color (whiteness) in the diamond"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: carat
+Variance = 0.2247
+Correlation = 0.9534
+Mutual Information = 2.5299
+RF Importance = 0.9394
+
+Feature: x
+Variance = 1.2583
+Correlation = 0.9708
+Mutual Information = 2.1219
+RF Importance = 0.0126
+
+Feature: y
+Variance = 1.3045
+Correlation = 0.9520
+Mutual Information = 2.0877
+RF Importance = 0.0063
+
+Feature: price
+Variance = 15915629.4243
+Correlation = 0.8612
+Mutual Information = 1.4334
+RF Importance = 0.0044
+
+Feature: Unnamed: 0
+Variance = 242464795.0000
+Correlation = -0.3992
+Mutual Information = 1.2306
+RF Importance = 0.0033
+
+Feature: depth
+Variance = 2.0524
+Correlation = 0.0949
+Mutual Information = 0.2218
+RF Importance = 0.0068
+
+Feature: clarity
+Variance = 2.9742
+Correlation = -0.2243
+Mutual Information = 0.1209
+RF Importance = 0.0019
+
+Feature: table
+Variance = 4.9929
+Correlation = 0.1509
+Mutual Information = 0.0872
+RF Importance = 0.0174
+
+Feature: cut
+Variance = 1.0562
+Correlation = 0.0020
+Mutual Information = 0.0715
+RF Importance = 0.0073
+
+Feature: color
+Variance = 2.8938
+Correlation = 0.2682
+Mutual Information = 0.0683
+RF Importance = 0.0006
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

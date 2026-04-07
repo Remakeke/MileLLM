@@ -1,0 +1,156 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a fermentation and chemical interaction analyst.
+Your role is to analyze how chemical processes transform components.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing wine samples using chemical and process-related features.
+
+The learning objective is to support prediction by constructing derived features
+that capture chemical transformations.
+
+Focus on variables such as alcohol, sulfur dioxide, and acidity.
+
+In particular, consider how interactions among these variables
+reflect fermentation processes and chemical reactions.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"fixed acidity": "fixed acidity of the wine",
+"volatile acidity": "volatile acidity of the wine",
+"citric acid": "citric acid of the wine",
+"residual sugar": "residual sugar of the wine",
+"chlorides": "chlorides of the wine",
+"free sulfur dioxide": "free sulfur dioxide of the wine",
+"total sulfur dioxide": "total sulfur dioxide of the wine",
+"density": "density of the wine",
+"pH": "pH of the wine",
+"sulphates": "sulphates of the wine",
+"alcohol": "alcohol of the wine",
+"color": "color of the wine"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: density
+Variance = 0.0000
+Correlation = -0.3059
+Mutual Information = 0.1567
+RF Importance = 0.1025
+
+Feature: alcohol
+Variance = 1.4226
+Correlation = 0.4443
+Mutual Information = 0.1374
+RF Importance = 0.1236
+
+Feature: chlorides
+Variance = 0.0012
+Correlation = -0.2007
+Mutual Information = 0.0790
+RF Importance = 0.0849
+
+Feature: total sulfur dioxide
+Variance = 3194.7200
+Correlation = -0.0414
+Mutual Information = 0.0654
+RF Importance = 0.0913
+
+Feature: residual sugar
+Variance = 22.6367
+Correlation = -0.0370
+Mutual Information = 0.0597
+RF Importance = 0.0840
+
+Feature: volatile acidity
+Variance = 0.0271
+Correlation = -0.2657
+Mutual Information = 0.0569
+RF Importance = 0.1000
+
+Feature: free sulfur dioxide
+Variance = 315.0412
+Correlation = 0.0555
+Mutual Information = 0.0392
+RF Importance = 0.0859
+
+Feature: citric acid
+Variance = 0.0211
+Correlation = 0.0855
+Mutual Information = 0.0390
+RF Importance = 0.0797
+
+Feature: sulphates
+Variance = 0.0221
+Correlation = 0.0385
+Mutual Information = 0.0264
+RF Importance = 0.0859
+
+Feature: pH
+Variance = 0.0259
+Correlation = 0.0195
+Mutual Information = 0.0203
+RF Importance = 0.0832
+
+Feature: color
+Variance = 0.1856
+Correlation = 0.1193
+Mutual Information = 0.0167
+RF Importance = 0.0037
+
+Feature: fixed acidity
+Variance = 1.6807
+Correlation = -0.0767
+Mutual Information = 0.0144
+RF Importance = 0.0754
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

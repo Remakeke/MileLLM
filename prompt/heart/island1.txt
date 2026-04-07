@@ -1,0 +1,139 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a baseline physiological risk analyst.
+Your role is to evaluate underlying health conditions based on static physiological indicators.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing patients with cardiovascular-related features.
+
+The learning objective is to support classification by constructing derived features
+that capture baseline physiological risk.
+
+Focus on how variables such as age, resting blood pressure, cholesterol,
+and fasting blood sugar interact to reflect underlying health conditions.
+
+In particular, consider how combinations or amplifications of these features
+indicate chronic risk factors.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Age":"age of the patient",
+"Sex":"sex of the patient",
+"ChestPainType":"chest pain type",
+"RestingBP":"resting blood pressure [mm Hg]",
+"Cholesterol":"serum cholesterol [mm/dl]",
+"FastingBS":"fasting blood sugar [1: if FastingBS > 120 mg/dl, 0: otherwise]",
+"RestingECG":"resting electrocardiogram results",
+"MaxHR":"maximum heart rate achieved",
+"ExerciseAngina":"exercise-induced angina",
+"Oldpeak":"oldpeak = ST [Numeric value measured in depression]",
+"ST_Slope":"the slope of the peak exercise ST segment"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: ST_Slope
+Variance = 0.3685
+Correlation = -0.5588
+Mutual Information = 0.2172
+
+Feature: ExerciseAngina
+Variance = 0.2411
+Correlation = 0.4943
+Mutual Information = 0.1586
+
+Feature: ChestPainType
+Variance = 0.9149
+Correlation = -0.3868
+Mutual Information = 0.1484
+
+Feature: Oldpeak
+Variance = 1.1376
+Correlation = 0.4040
+Mutual Information = 0.1278
+
+Feature: MaxHR
+Variance = 648.2286
+Correlation = -0.4004
+Mutual Information = 0.0934
+
+Feature: Cholesterol
+Variance = 11964.8911
+Correlation = -0.2327
+Mutual Information = 0.0614
+
+Feature: Sex
+Variance = 0.1662
+Correlation = 0.3054
+Mutual Information = 0.0538
+
+Feature: FastingBS
+Variance = 0.1790
+Correlation = 0.2673
+Mutual Information = 0.0489
+
+Feature: Age
+Variance = 88.9743
+Correlation = 0.2820
+Mutual Information = 0.0445
+
+Feature: RestingECG
+Variance = 0.3990
+Correlation = 0.0574
+Mutual Information = 0.0024
+
+Feature: RestingBP
+Variance = 342.7739
+Correlation = 0.1076
+Mutual Information = 0.0011
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

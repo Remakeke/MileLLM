@@ -1,0 +1,619 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a physiological response and treatment analyst.
+Your role is to analyze how physiological measurements interact with medical interventions.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset of patients with physiological indicators and treatment records.
+
+The learning objective is to support classification by constructing derived features
+that capture the relationship between physiological state and treatment.
+
+Focus on variables such as blood pressure, blood test results, and administered therapies.
+
+In particular, consider how treatment usage modifies or interacts with physiological indicators,
+reflecting patient response or treatment effectiveness.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"AGE": "Age",
+"SEX": "Gender",
+"INF_ANAM": "Quantity of myocardial infarctions in the anamnesis",
+"STENOK_AN": "Exertional angina pectoris in the anamnesis",
+"FK_STENOK": "Functional class of angina pectoris in the last year",
+"IBS_POST": "Coronary heart disease in recent weeks, days before admission to hospital",
+"GB": "Presence of an essential hypertension",
+"SIM_GIPERT": "Symptomatic hypertension",
+"DLIT_AG": "Duration of arterial hypertension",
+"ZSN_A": "Presence of chronic Heart failure in the anamnesis",
+"nr_11": "Observing of arrhythmia in the anamnesis",
+"nr_01": "Premature atrial contractions in the anamnesis",
+"nr_02": "Premature ventricular contractions in the anamnesis",
+"nr_03": "Paroxysms of atrial fibrillation in the anamnesis",
+"nr_04": "A persistent form of atrial fibrillation in the anamnesis",
+"nr_07": "Ventricular fibrillation in the anamnesis",
+"nr_08": "Ventricular paroxysmal tachycardia in the anamnesis",
+"np_01": "First-degree AV block in the anamnesis",
+"np_04": "Third-degree AV block in the anamnesis",
+"np_05": "LBBB (anterior branch) in the anamnesis",
+"np_07": "Incomplete LBBB in the anamnesis",
+"np_08": "Complete LBBB in the anamnesis",
+"np_09": "Incomplete RBBB in the anamnesis",
+"np_10": "Complete RBBB in the anamnesis",
+"endocr_01": "Diabetes mellitus in the anamnesis",
+"endocr_02": "Obesity in the anamnesis",
+"endocr_03": "Thyrotoxicosis in the anamnesis",
+"zab_leg_01": "Chronic bronchitis in the anamnesis",
+"zab_leg_02": "chronic bronchitis in the anamnesis",
+"zab_leg_03": "Bronchial asthma in the anamnesis",
+"zab_leg_04": "Chronic pneumonia in the anamnesis",
+"zab_leg_06": "Pulmonary tuberculosis in the anamnesis",
+"S_AD_ORIT": "Systolic blood pressure according to intensive care unit",
+"D_AD_ORIT": "Diastolic blood pressure according to intensive care unit",
+"O_L_POST": "Pulmonary edema at the time of admission to intensive care unit",
+"K_SH_POST": "Cardiogenic shock at the time of admission to intensive care unit",
+"MP_TP_POST": "Paroxysms of atrial fibrillation at the time of admission to intensive care unit, or at a prehospital stage",
+"SVT_POST": "Paroxysms of supraventricular tachycardia at the time of admission to intensive care unit",
+"GT_POST": "Paroxysms of ventricular tachycardia at the time of admission to intensive care unit",
+"FIB_G_POST": "Ventricular fibrillation at the time of admission to intensive care unit",
+"ant_im": "Presence of an anterior myocardial infarction (left ventricular, ECG changes in leads V1 \u2013 V4)",
+"lat_im": "Presence of a lateral myocardial infarction (left ventricular, ECG changes in leads V5 \u2013 V6, I, AVL)",
+"inf_im": "Presence of an inferior myocardial infarction (left ventricular, ECG changes in leads III, AVF, II.)",
+"post_im": "Presence of a posterior myocardial infarction (left ventricular, ECG changes in V7 \u2013 V9, reciprocity changes in leads V1 \u2013 V3)",
+"IM_PG_P": "Presence of a right ventricular myocardial infarction",
+"ritm_ecg_p_01": "ECG rhythm at the time of admission to hospital \u2013 sinus with a heart rate 60-90",
+"ritm_ecg_p_02": "ECG rhythm at the time of admission to hospital \u2013 atrial fibrillation",
+"ritm_ecg_p_04": "ECG rhythm at the time of admission to hospital \u2013 atrial",
+"ritm_ecg_p_06": "ECG rhythm at the time of admission to hospital \u2013 idioventricular",
+"ritm_ecg_p_07": "ECG rhythm at the time of admission to hospital \u2013 sinus with a heart rate above 90",
+"ritm_ecg_p_08": "ECG rhythm at the time of admission to hospital \u2013 sinus with a heart rate below 60",
+"n_r_ecg_p_01": "Premature atrial contractions on ECG at the time of admission to hospital",
+"n_r_ecg_p_02": "Frequent premature atrial contractions on ECG at the time of admission to hospital",
+"n_r_ecg_p_03": "ventricular contractions on ECG at the time of admission to hospital",
+"n_r_ecg_p_04": "Frequent premature ventricular contractions on ECG at the time of admission to hospital",
+"n_r_ecg_p_05": "Paroxysms of atrial fibrillation on ECG at the time of admission to hospital",
+"n_r_ecg_p_06": "Persistent form of atrial fibrillation on ECG at the time of admission to hospital",
+"n_r_ecg_p_08": "Paroxysms of supraventricular tachycardia on ECG at the time of admission to hospital",
+"n_r_ecg_p_09": "Paroxysms of ventricular tachycardia on ECG at the time of admission to hospital",
+"n_r_ecg_p_10": "Ventricular fibrillation on ECG at the time of admission to hospital",
+"n_p_ecg_p_01": "Sinoatrial block on ECG at the time of admission to hospital",
+"n_p_ecg_p_03": "First-degree AV block on ECG at the time of admission to hospital",
+"n_p_ecg_p_04": "Type 1 Second-degree AV block (Mobitz I/Wenckebach) on ECG at the time of admission to hospital",
+"n_p_ecg_p_05": "Type 2 Second-degree AV block (Mobitz II/Hay) on ECG at the time of admission to hospital",
+"n_p_ecg_p_06": "Third-degree AV block on ECG at the time of admission to hospital",
+"n_p_ecg_p_07": "LBBB (anterior branch) on ECG at the time of admission to hospital",
+"n_p_ecg_p_08": "LBBB (anterior branch) on ECG at the time of admission to hospital",
+"n_p_ecg_p_09": "Incomplete LBBB on ECG at the time of admission to hospital",
+"n_p_ecg_p_10": "Complete LBBB on ECG at the time of admission to hospital",
+"n_p_ecg_p_11": "Incomplete RBBB on ECG at the time of admission to hospital",
+"n_p_ecg_p_12": "Complete RBBB on ECG at the time of admission to hospital",
+"fibr_ter_01": "Fibrinolytic therapy by Celiasum 750k IU",
+"fibr_ter_02": "Fibrinolytic therapy by Celiasum 1m IU",
+"fibr_ter_03": "Fibrinolytic therapy by Celiasum 3m IU",
+"fibr_ter_05": "Fibrinolytic therapy by Streptase",
+"fibr_ter_06": "Fibrinolytic therapy by Celiasum 500k IU",
+"fibr_ter_07": "Fibrinolytic therapy by Celiasum 250k IU",
+"fibr_ter_08": "Fibrinolytic therapy by Streptodecase 1.5m IU",
+"ALT_BLOOD": "Serum AlAT content",
+"AST_BLOOD": "Serum AsAT content",
+"L_BLOOD": "White blood cell count (billions per liter)",
+"ROE": "Erythrocyte sedimentation rate",
+"TIME_B_S": "Time elapsed from the beginning of the attack of CHD to the hospital",
+"NITR_S": "Use of liquid nitrates in the ICU",
+"LID_S_n": "Use of lidocaine in the ICU",
+"B_BLOK_S_n": "Use of beta-blockers in the ICU",
+"ANT_CA_S_n": "Use of calcium channel blockers in the ICU",
+"GEPAR_S_n": "Use of \u0430 anticoagulants in the ICU",
+"ASP_S_n": "Use of acetylsalicylic acid in the ICU",
+"TIKL_S_n": "Use of Ticlid in the ICU",
+"TRENT_S_n": "Use of Trental in the ICU",
+"ZSN": "Chronic heart failure"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: lat_im
+Variance = 3.4874
+Correlation = -0.0297
+Mutual Information = 0.0532
+
+Feature: ZSN_A
+Variance = 0.5594
+Correlation = -0.3887
+Mutual Information = 0.0489
+
+Feature: ant_im
+Variance = 2.3977
+Correlation = 0.0476
+Mutual Information = 0.0444
+
+Feature: n_p_ecg_p_09
+Variance = 0.0029
+Correlation = -0.0288
+Mutual Information = 0.0399
+
+Feature: endocr_01
+Variance = 0.1278
+Correlation = 0.1393
+Mutual Information = 0.0389
+
+Feature: fibr_ter_05
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0382
+
+Feature: n_r_ecg_p_04
+Variance = 0.0419
+Correlation = 0.0404
+Mutual Information = 0.0290
+
+Feature: zab_leg_01
+Variance = 0.0639
+Correlation = 0.0776
+Mutual Information = 0.0288
+
+Feature: n_r_ecg_p_02
+Variance = 0.0029
+Correlation = -0.0288
+Mutual Information = 0.0251
+
+Feature: ritm_ecg_p_08
+Variance = 0.0297
+Correlation = 0.0071
+Mutual Information = 0.0234
+
+Feature: TIKL_S_n
+Variance = 0.0228
+Correlation = -0.0592
+Mutual Information = 0.0232
+
+Feature: nr_03
+Variance = 0.0130
+Correlation = -0.0307
+Mutual Information = 0.0169
+
+Feature: ritm_ecg_p_06
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0166
+
+Feature: ANT_CA_S_n
+Variance = 0.2044
+Correlation = 0.0266
+Mutual Information = 0.0163
+
+Feature: AGE
+Variance = 125.9188
+Correlation = 0.1884
+Mutual Information = 0.0162
+
+Feature: INF_ANAM
+Variance = 1.5446
+Correlation = -0.0403
+Mutual Information = 0.0158
+
+Feature: inf_im
+Variance = 2.3637
+Correlation = 0.0480
+Mutual Information = 0.0152
+
+Feature: GEPAR_S_n
+Variance = 0.1592
+Correlation = -0.0252
+Mutual Information = 0.0148
+
+Feature: nr_07
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0148
+
+Feature: np_01
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0124
+
+Feature: nr_04
+Variance = 0.0130
+Correlation = 0.0927
+Mutual Information = 0.0119
+
+Feature: fibr_ter_08
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0116
+
+Feature: fibr_ter_06
+Variance = 0.0015
+Correlation = 0.0716
+Mutual Information = 0.0116
+
+Feature: np_09
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0116
+
+Feature: IM_PG_P
+Variance = 0.0311
+Correlation = 0.0025
+Mutual Information = 0.0108
+
+Feature: n_r_ecg_p_08
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0107
+
+Feature: n_r_ecg_p_09
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0096
+
+Feature: n_p_ecg_p_07
+Variance = 0.0472
+Correlation = 0.0075
+Mutual Information = 0.0090
+
+Feature: K_SH_POST
+Variance = 0.0101
+Correlation = -0.0192
+Mutual Information = 0.0086
+
+Feature: ASP_S_n
+Variance = 0.1719
+Correlation = 0.0462
+Mutual Information = 0.0084
+
+Feature: np_08
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0067
+
+Feature: zab_leg_03
+Variance = 0.0144
+Correlation = -0.0356
+Mutual Information = 0.0065
+
+Feature: O_L_POST
+Variance = 0.0614
+Correlation = 0.0855
+Mutual Information = 0.0050
+
+Feature: n_r_ecg_p_01
+Variance = 0.0392
+Correlation = -0.0036
+Mutual Information = 0.0039
+
+Feature: nr_11
+Variance = 0.0200
+Correlation = 0.0471
+Mutual Information = 0.0038
+
+Feature: fibr_ter_07
+Variance = 0.0029
+Correlation = -0.0288
+Mutual Information = 0.0029
+
+Feature: S_AD_ORIT
+Variance = 750.7312
+Correlation = 0.0377
+Mutual Information = 0.0027
+
+Feature: n_p_ecg_p_10
+Variance = 0.0115
+Correlation = 0.0401
+Mutual Information = 0.0026
+
+Feature: ritm_ecg_p_04
+Variance = 0.0115
+Correlation = -0.0253
+Mutual Information = 0.0014
+
+Feature: B_BLOK_S_n
+Variance = 0.0859
+Correlation = -0.0408
+Mutual Information = 0.0010
+
+Feature: nr_01
+Variance = 0.0015
+Correlation = 0.0716
+Mutual Information = 0.0004
+
+Feature: n_p_ecg_p_05
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0003
+
+Feature: DLIT_AG
+Variance = 3.6458
+Correlation = -0.0431
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_06
+Variance = 0.0115
+Correlation = 0.0728
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_04
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0000
+
+Feature: AST_BLOOD
+Variance = 0.0457
+Correlation = 0.0241
+Mutual Information = 0.0000
+
+Feature: NITR_S
+Variance = 0.1009
+Correlation = 0.0632
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_08
+Variance = 0.0058
+Correlation = 0.0513
+Mutual Information = 0.0000
+
+Feature: LID_S_n
+Variance = 0.2044
+Correlation = 0.0122
+Mutual Information = 0.0000
+
+Feature: TIME_B_S
+Variance = 7.5877
+Correlation = -0.0114
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_11
+Variance = 0.0214
+Correlation = -0.0078
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_12
+Variance = 0.0472
+Correlation = 0.0237
+Mutual Information = 0.0000
+
+Feature: fibr_ter_01
+Variance = 0.0029
+Correlation = -0.0288
+Mutual Information = 0.0000
+
+Feature: fibr_ter_02
+Variance = 0.0130
+Correlation = 0.0002
+Mutual Information = 0.0000
+
+Feature: fibr_ter_03
+Variance = 0.0537
+Correlation = -0.0400
+Mutual Information = 0.0000
+
+Feature: ROE
+Variance = 134.7726
+Correlation = 0.0521
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_01
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0000
+
+Feature: L_BLOOD
+Variance = 11.0754
+Correlation = 0.0076
+Mutual Information = 0.0000
+
+Feature: ALT_BLOOD
+Variance = 0.1596
+Correlation = 0.0348
+Mutual Information = 0.0000
+
+Feature: n_p_ecg_p_03
+Variance = 0.0200
+Correlation = -0.0025
+Mutual Information = 0.0000
+
+Feature: ritm_ecg_p_01
+Variance = 0.2144
+Correlation = -0.1199
+Mutual Information = 0.0000
+
+Feature: n_r_ecg_p_10
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0000
+
+Feature: n_r_ecg_p_06
+Variance = 0.0130
+Correlation = 0.1236
+Mutual Information = 0.0000
+
+Feature: STENOK_AN
+Variance = 2.0809
+Correlation = -0.0396
+Mutual Information = 0.0000
+
+Feature: FK_STENOK
+Variance = 2.2877
+Correlation = -0.0430
+Mutual Information = 0.0000
+
+Feature: IBS_POST
+Variance = 0.7083
+Correlation = 0.0135
+Mutual Information = 0.0000
+
+Feature: GB
+Variance = 0.8899
+Correlation = -0.0340
+Mutual Information = 0.0000
+
+Feature: SIM_GIPERT
+Variance = 0.0365
+Correlation = -0.0507
+Mutual Information = 0.0000
+
+Feature: nr_02
+Variance = 0.0144
+Correlation = -0.0356
+Mutual Information = 0.0000
+
+Feature: nr_08
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0000
+
+Feature: np_04
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0000
+
+Feature: np_05
+Variance = 0.0058
+Correlation = -0.0409
+Mutual Information = 0.0000
+
+Feature: np_07
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0000
+
+Feature: np_10
+Variance = 0.0000
+Correlation = nan
+Mutual Information = 0.0000
+
+Feature: endocr_02
+Variance = 0.0242
+Correlation = 0.0053
+Mutual Information = 0.0000
+
+Feature: endocr_03
+Variance = 0.0058
+Correlation = 0.0513
+Mutual Information = 0.0000
+
+Feature: zab_leg_02
+Variance = 0.0652
+Correlation = 0.0050
+Mutual Information = 0.0000
+
+Feature: zab_leg_04
+Variance = 0.0015
+Correlation = -0.0204
+Mutual Information = 0.0000
+
+Feature: zab_leg_06
+Variance = 0.0072
+Correlation = -0.0045
+Mutual Information = 0.0000
+
+Feature: D_AD_ORIT
+Variance = 203.3472
+Correlation = 0.0192
+Mutual Information = 0.0000
+
+Feature: MP_TP_POST
+Variance = 0.0419
+Correlation = 0.0747
+Mutual Information = 0.0000
+
+Feature: SVT_POST
+Variance = 0.0029
+Correlation = -0.0288
+Mutual Information = 0.0000
+
+Feature: GT_POST
+Variance = 0.0015
+Correlation = 0.0716
+Mutual Information = 0.0000
+
+Feature: FIB_G_POST
+Variance = 0.0072
+Correlation = -0.0045
+Mutual Information = 0.0000
+
+Feature: post_im
+Variance = 1.8374
+Correlation = 0.0526
+Mutual Information = 0.0000
+
+Feature: SEX
+Variance = 0.2299
+Correlation = -0.1444
+Mutual Information = 0.0000
+
+Feature: ritm_ecg_p_02
+Variance = 0.0432
+Correlation = 0.0867
+Mutual Information = 0.0000
+
+Feature: ritm_ecg_p_07
+Variance = 0.1735
+Correlation = 0.0936
+Mutual Information = 0.0000
+
+Feature: n_r_ecg_p_03
+Variance = 0.1065
+Correlation = 0.0066
+Mutual Information = 0.0000
+
+Feature: n_r_ecg_p_05
+Variance = 0.0352
+Correlation = 0.0086
+Mutual Information = 0.0000
+
+Feature: TRENT_S_n
+Variance = 0.1852
+Correlation = 0.0390
+Mutual Information = 0.0000
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 10 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

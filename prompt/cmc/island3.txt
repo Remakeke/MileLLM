@@ -1,0 +1,187 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a behavioral and cultural influence analyst.
+Your role is to analyze how cultural and behavioral factors influence decision-making.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing individuals with behavioral and cultural attributes.
+
+The learning objective is to support classification by constructing derived features
+that capture behavioral tendencies and cultural influences.
+
+Focus on how variables such as religion, media exposure, and working status
+interact with other features.
+
+In particular, consider how these factors may amplify or suppress
+the effects of demographic and socioeconomic characteristics.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Wifes_age": "Wife's age (numerical)",
+"Wifes_education": "Wife's education (categorical) 1=low, 2=low-mid, 3=mid-high, 4=high",
+"Husbands_education": "Husband's education (categorical) 1=low, 2=low-mid, 3=mid-high, 4=high",
+"Number_of_children_ever_born": "Number of children ever born (numerical)",
+"Wifes_religion": "Wife's religion (binary) 0=Non-Islam, 1=Islam",
+"Wifes_now_working": "Wife's now working? (binary) 0=Yes, 1=No",
+"Husbands_occupation": "Husband's occupation (categorical) 1=low, 2=low-mid, 3=mid-high, 4=high",
+"Standard_of_living_index": "Standard-of-living index (categorical) 1=low, 2=low-mid, 3=mid-high, 4=high",
+"Media_exposure": "Media exposure (binary) 0=Good, 1=Not good"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: I (Halstead intelligence; maintainability-related measure)
+Variance = 1251.159
+Correlation = 0.2136
+Mutual Information = 0.0566
+
+Feature: V (Halstead volume; implementation size)
+Variance = 2276673
+Correlation = 0.2286
+Mutual Information = 0.0487
+
+Feature: total_Op (Total operators)
+Variance = 12466.36
+Correlation = 0.2236
+Mutual Information = 0.0432
+
+Feature: T (Halstead time; estimated development time)
+Variance = 89793150
+Correlation = 0.1177
+Mutual Information = 0.0422
+
+Feature: E (Halstead effort; development effort)
+Variance = 2.9093e10
+Correlation = 0.1177
+Mutual Information = 0.0416
+
+Feature: loc (Lines of code; size indicator)
+Variance = 1243.839
+Correlation = 0.2676
+Mutual Information = 0.0414
+
+Feature: N (Total operators + operands)
+Variance = 38906.73
+Correlation = 0.2215
+Mutual Information = 0.0404
+
+Feature: total_Opnd (Total operands)
+Variance = 7442.473
+Correlation = 0.2171
+Mutual Information = 0.0397
+
+Feature: uniq_Opnd (Unique operands)
+Variance = 843.2248
+Correlation = 0.2830
+Mutual Information = 0.0387
+
+Feature: lOComment (Comment lines)
+Variance = 110.538
+Correlation = 0.2653
+Mutual Information = 0.0365
+
+Feature: lOCode (Code lines)
+Variance = 1126.240
+Correlation = 0.2579
+Mutual Information = 0.0341
+
+Feature: B (Halstead bugs estimate)
+Variance = 0.2546
+Correlation = 0.2338
+Mutual Information = 0.0295
+
+Feature: iv(G) (Design complexity)
+Variance = 40.9486
+Correlation = 0.1548
+Mutual Information = 0.0275
+
+Feature: lOBlank (Blank lines)
+Variance = 151.1833
+Correlation = 0.2705
+Mutual Information = 0.0229
+
+Feature: uniq_Op (Unique operators)
+Variance = 66.8884
+Correlation = 0.1971
+Mutual Information = 0.0184
+
+Feature: L (Halstead level; abstraction level)
+Variance = 0.0216
+Correlation = -0.0047
+Mutual Information = 0.0170
+
+Feature: v(g) (Cyclomatic complexity)
+Variance = 80.1909
+Correlation = 0.1575
+Mutual Information = 0.0134
+
+Feature: locCodeAndComment (Mixed lines)
+Variance = 11.1809
+Correlation = 0.2347
+Mutual Information = 0.0128
+
+Feature: D (Halstead difficulty)
+Variance = 266.6735
+Correlation = 0.0946
+Mutual Information = 0.0119
+
+Feature: branchCount (Branch statements)
+Variance = 273.3473
+Correlation = 0.1505
+Mutual Information = 0.0111
+
+Feature: ev(g) (Essential complexity)
+Variance = 30.9714
+Correlation = 0.1134
+Mutual Information = 0.0000
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 3 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

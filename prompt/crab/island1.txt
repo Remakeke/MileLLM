@@ -1,0 +1,121 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a morphological structure analyst.
+Your role is to analyze the geometric structure and spatial proportions of biological organisms.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset of crabs described by geometric and physical measurements.
+
+The learning objective is to support classification by constructing derived features
+that capture morphological structure and body shape.
+
+Focus on how measurements such as length, diameter, and height
+interact to describe shape, elongation, and spatial proportions.
+
+In particular, consider how combinations of geometric features
+reflect structural differences among individuals.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"Sex": "Gender of the Crab - Male, Female and Indeterminate.",
+"Length": "Length of the Crab (in Feet; 1 foot = 30.48 cms)",
+"Diameter": "Diameter of the Crab (in Feet; 1 foot = 30.48 cms)",
+"Height": "Height of the Crab (in Feet; 1 foot = 30.48 cms)",
+"Weight": "Weight of the Crab (in ounces; 1 Pound = 16 ounces)",
+"Shucked Weight": "Weight without the shell (in ounces; 1 Pound = 16 ounces)",
+"Viscera Weight": "is weight that wraps around your abdominal organs deep inside body (in ounces; 1 Pound = 16 ounces)",
+"Shell Weight": "Weight of the Shell (in ounces; 1 Pound = 16 ounces)"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: Shell Weight
+Variance = 15.5503
+Correlation = 0.6252
+Mutual Information = 0.4470
+
+Feature: Diameter
+Variance = 0.0616
+Correlation = 0.5738
+Mutual Information = 0.3886
+
+Feature: Weight
+Variance = 192.9655
+Correlation = 0.5388
+Mutual Information = 0.3811
+
+Feature: Length
+Variance = 0.0903
+Correlation = 0.5550
+Mutual Information = 0.3758
+
+Feature: Height
+Variance = 0.0110
+Correlation = 0.5520
+Mutual Information = 0.3744
+
+Feature: Viscera Weight
+Variance = 9.6356
+Correlation = 0.5013
+Mutual Information = 0.3728
+
+Feature: Shucked Weight
+Variance = 39.3791
+Correlation = 0.4188
+Mutual Information = 0.3277
+
+Feature: Sex
+Variance = 0.6805
+Correlation = -0.0337
+Mutual Information = 0.1576
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 2 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>

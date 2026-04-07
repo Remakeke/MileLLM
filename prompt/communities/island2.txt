@@ -1,0 +1,686 @@
+----------------------------------------------------------------------
+Functional Identity.
+----------------------------------------------------------------------
+You are assigned the functional identity of a spatial and environmental structure analyst.
+Your role is to analyze how spatial distribution and living conditions
+affect community characteristics.
+
+----------------------------------------------------------------------
+Task Context.
+----------------------------------------------------------------------
+You are given a dataset describing communities with housing and spatial attributes.
+
+The learning objective is to support prediction by constructing derived features
+that capture spatial structure and environmental conditions.
+
+Focus on how variables such as population density, housing conditions,
+mobility, and urbanization interact.
+
+In particular, consider how density, crowding, and mobility patterns
+reflect environmental stress or stability.
+
+
+----------------------------------------------------------------------
+Feature Metadata (do NOT rename):
+----------------------------------------------------------------------
+
+"state": "US state",
+"communityname": "community name",
+"fold": "fold number for non-random 10 fold cross validation, potentially useful for debugging, paired tests",
+"population": "population for community",
+"householdsize": "mean people per household",
+"racepctblack": "percentage of population that is african american",
+"racePctWhite": "percentage of population that is caucasian",
+"racePctAsian": "percentage of population that is of asian heritage",
+"racePctHisp": "percentage of population that is of hispanic heritage",
+"agePct12t21": "percentage of population that is 12-21 in age",
+"agePct12t29": "percentage of population that is 12-29 in age",
+"agePct16t24": "percentage of population that is 16-24 in age",
+"agePct65up": "percentage of population that is 65 and over in age",
+"numbUrban": "number of people living in areas classified as urban",
+"pctUrban": "percentage of people living in areas classified as urban",
+"medIncome": "median household income",
+"pctWWage": "percentage of households with wage or salary income in 1989",
+"pctWFarmSelf": "percentage of households with farm or self employment income in 1989",
+"pctWInvInc": "percentage of households with investment / rent income in 1989",
+"pctWSocSec": "percentage of households with social security income in 1989",
+"pctWPubAsst": "percentage of households with public assistance income in 1989",
+"pctWRetire": "percentage of households with retirement income in 1989",
+"medFamInc": "median family income",
+"perCapInc": "per capita income",
+"whitePerCap": "per capita income for caucasians",
+"blackPerCap": "per capita income for african americans",
+"indianPerCap": "per capita income for native americans",
+"AsianPerCap": "per capita income for people with asian heritage",
+"HispPerCap": "per capita income for people with hispanic heritage",
+"NumUnderPov": "number of people under the poverty level",
+"PctPopUnderPov": "percentage of people under the poverty level",
+"PctLess9thGrade": "percentage of people 25 and over with less than a 9th grade education",
+"PctNotHSGrad": "percentage of people 25 and over that are not high school graduates",
+"PctBSorMore": "percentage of people 25 and over with a bachelors degree or higher education",
+"PctUnemployed": "percentage of people 16 and over, in the labor force, and unemployed",
+"PctEmploy": "percentage of people 16 and over who are employed",
+"PctEmplManu": "percentage of people 16 and over who are employed in manufacturing",
+"PctEmplProfServ": "percentage of people 16 and over who are employed in professional services",
+"PctOccupManu": "percentage of people 16 and over who are employed in manufacturing",
+"PctOccupMgmtProf": "percentage of people 16 and over who are employed in management or professional occupations",
+"MalePctDivorce": "percentage of males who are divorced",
+"MalePctNevMarr": "percentage of males who have never married",
+"FemalePctDiv": "percentage of females who are divorced",
+"TotalPctDiv": "percentage of population who are divorced",
+"PersPerFam": "mean number of people per family",
+"PctFam2Par": "percentage of families",
+"PctKids2Par": "percentage of kids in family housing with two parents",
+"PctYoungKids2Par": "percent of kids 4 and under in two parent households",
+"PctTeen2Par": "percent of kids age 12-17 in two parent households",
+"PctWorkMomYoungKids": "percentage of moms of kids 6 and under in labor force",
+"PctWorkMom": "percentage of moms of kids under 18 in labor force",
+"NumIlleg": "number of kids born to never married",
+"PctIlleg": "percentage of kids born to never married",
+"NumImmig": "total number of people known to be foreign born",
+"PctImmigRecent": "percentage of _immigrants_ who immigated within last 3 years",
+"PctImmigRec5": "percentage of _immigrants_ who immigated within last 5 years",
+"PctImmigRec8": "percentage of _immigrants_ who immigated within last 8 years",
+"PctImmigRec10": "percentage of _immigrants_ who immigated within last 10 years",
+"PctRecentImmig": "percent of _population_ who have immigrated within the last 3 years",
+"PctRecImmig5": "percent of _population_ who have immigrated within the last 5 years",
+"PctRecImmig8": "percent of _population_ who have immigrated within the last 8 years",
+"PctRecImmig10": "percent of _population_ who have immigrated within the last 10 years",
+"PctSpeakEnglOnly": "percent of people who speak only English",
+"PctNotSpeakEnglWell": "percent of people who do not speak English well",
+"PctLargHouseFam": "percent of family households that are large",
+"PctLargHouseOccup": "percent of all occupied households that are large",
+"PersPerOccupHous": "mean persons per household",
+"PersPerOwnOccHous": "mean persons per owner occupied household",
+"PersPerRentOccHous": "mean persons per rental household",
+"PctPersOwnOccup": "percent of people in owner occupied households",
+"PctPersDenseHous": "percent of persons in dense housing",
+"PctHousLess3BR": "percent of housing units with less than 3 bedrooms",
+"MedNumBR": "median number of bedrooms",
+"HousVacant": "number of vacant households",
+"PctHousOccup": "percent of housing occupied",
+"PctHousOwnOcc": "percent of households owner occupied",
+"PctVacantBoarded": "percent of vacant housing that is boarded up",
+"PctVacMore6Mos": "percent of vacant housing that has been vacant more than 6 months",
+"MedYrHousBuilt": "median year housing units built",
+"PctHousNoPhone": "percent of occupied housing units without phone",
+"PctWOFullPlumb": "percent of housing without complete plumbing facilities",
+"OwnOccLowQuart": "owner occupied housing - lower quartile value",
+"OwnOccMedVal": "owner occupied housing - median value",
+"OwnOccHiQuart": "owner occupied housing - upper quartile value",
+"RentLowQ": "rental housing - lower quartile rent",
+"RentMedian": "rental housing - median rent",
+"RentHighQ": "rental housing - upper quartile rent",
+"MedRent": "median gross rent",
+"MedRentPctHousInc": "median gross rent as a percentage of household income",
+"MedOwnCostPctInc": "median owners cost as a percentage of household income - for owners with a mortgage",
+"MedOwnCostPctIncNoMtg": "median owners cost as a percentage of household income - for owners without a mortgage",
+"NumInShelters": "number of people in homeless shelters",
+"NumStreet": "number of homeless people counted in the street",
+"PctForeignBorn": "percent of people foreign born",
+"PctBornSameState": "percent of people born in the same state as currently living",
+"PctSameHouse85": "percent of people living in the same house as in 1985",
+"PctSameCity85": "percent of people living in the same city as in 1985",
+"PctSameState85": "percent of people living in the same state as in 1985",
+"LandArea": "land area in square miles",
+"PopDens": "population density in persons per square mile",
+"PctUsePubTrans": "percent of people using public transit for commuting",
+"LemasPctOfficDrugUn": "percent of officers assigned to drug units"
+
+----------------------------------------------------------------------
+Statistical Priors
+Each feature is annotated with:
+- Variance (dispersion)
+- Pearson correlation with target (linear relevance)
+- Mutual information with target (non-linear relevance)
+----------------------------------------------------------------------
+
+Feature: PctKids2Par
+Variance = 0.0426
+Correlation = 0.3929
+Mutual Information = 0.3505
+
+Feature: PctIlleg
+Variance = 0.0529
+Correlation = -0.4539
+Mutual Information = 0.3272
+
+Feature: PctFam2Par
+Variance = 0.0408
+Correlation = 0.3651
+Mutual Information = 0.3022
+
+Feature: NumIlleg
+Variance = 0.0118
+Correlation = -0.2881
+Mutual Information = 0.2909
+
+Feature: racePctWhite
+Variance = 0.0596
+Correlation = 0.4068
+Mutual Information = 0.2740
+
+Feature: PctYoungKids2Par
+Variance = 0.0479
+Correlation = 0.3752
+Mutual Information = 0.2583
+
+Feature: pctWInvInc
+Variance = 0.0317
+Correlation = 0.3026
+Mutual Information = 0.2455
+
+Feature: PctPopUnderPov
+Variance = 0.0522
+Correlation = -0.3175
+Mutual Information = 0.2404
+
+Feature: PctPersDenseHous
+Variance = 0.0441
+Correlation = -0.2763
+Mutual Information = 0.2375
+
+Feature: PctTeen2Par
+Variance = 0.0367
+Correlation = 0.3423
+Mutual Information = 0.2301
+
+Feature: pctWPubAsst
+Variance = 0.0493
+Correlation = -0.3575
+Mutual Information = 0.2258
+
+Feature: NumUnderPov
+Variance = 0.0164
+Correlation = -0.2891
+Mutual Information = 0.2169
+
+Feature: TotalPctDiv
+Variance = 0.0337
+Correlation = -0.2288
+Mutual Information = 0.2169
+
+Feature: FemalePctDiv
+Variance = 0.0307
+Correlation = -0.2337
+Mutual Information = 0.2150
+
+Feature: racepctblack
+Variance = 0.0642
+Correlation = -0.3719
+Mutual Information = 0.2059
+
+Feature: PctHousNoPhone
+Variance = 0.0590
+Correlation = -0.3016
+Mutual Information = 0.1956
+
+Feature: MalePctDivorce
+Variance = 0.0333
+Correlation = -0.2118
+Mutual Information = 0.1748
+
+Feature: PctPersOwnOccup
+Variance = 0.0388
+Correlation = 0.2577
+Mutual Information = 0.1688
+
+Feature: state
+Variance = 268.8797
+Correlation = 0.0973
+Mutual Information = 0.1601
+
+Feature: PctUnemployed
+Variance = 0.0409
+Correlation = -0.3076
+Mutual Information = 0.1478
+
+Feature: PctNotHSGrad
+Variance = 0.0410
+Correlation = -0.3038
+Mutual Information = 0.1443
+
+Feature: HousVacant
+Variance = 0.0226
+Correlation = -0.2574
+Mutual Information = 0.1354
+
+Feature: PctHousLess3BR
+Variance = 0.0298
+Correlation = -0.2069
+Mutual Information = 0.1343
+
+Feature: medFamInc
+Variance = 0.0393
+Correlation = 0.2280
+Mutual Information = 0.1214
+
+Feature: perCapInc
+Variance = 0.0365
+Correlation = 0.1894
+Mutual Information = 0.1214
+
+Feature: PctHousOwnOcc
+Variance = 0.0343
+Correlation = 0.2246
+Mutual Information = 0.1210
+
+Feature: population
+Variance = 0.0161
+Correlation = -0.2300
+Mutual Information = 0.1165
+
+Feature: PctLargHouseFam
+Variance = 0.0386
+Correlation = -0.2637
+Mutual Information = 0.1156
+
+Feature: blackPerCap
+Variance = 0.0294
+Correlation = 0.1744
+Mutual Information = 0.1149
+
+Feature: PctLess9thGrade
+Variance = 0.0455
+Correlation = -0.2810
+Mutual Information = 0.1124
+
+Feature: NumInShelters
+Variance = 0.0105
+Correlation = -0.2241
+Mutual Information = 0.1118
+
+Feature: PctVacantBoarded
+Variance = 0.0474
+Correlation = -0.2980
+Mutual Information = 0.1083
+
+Feature: PctOccupMgmtProf
+Variance = 0.0347
+Correlation = 0.1680
+Mutual Information = 0.1030
+
+Feature: medIncome
+Variance = 0.0438
+Correlation = 0.2126
+Mutual Information = 0.1007
+
+Feature: NumStreet
+Variance = 0.0101
+Correlation = -0.2048
+Mutual Information = 0.0943
+
+Feature: numbUrban
+Variance = 0.0164
+Correlation = -0.2239
+Mutual Information = 0.0942
+
+Feature: PctWOFullPlumb
+Variance = 0.0426
+Correlation = -0.2531
+Mutual Information = 0.0936
+
+Feature: racePctHisp
+Variance = 0.0541
+Correlation = -0.1879
+Mutual Information = 0.0922
+
+Feature: PctBSorMore
+Variance = 0.0438
+Correlation = 0.1504
+Mutual Information = 0.0898
+
+Feature: MedRentPctHousInc
+Variance = 0.0287
+Correlation = -0.1874
+Mutual Information = 0.0876
+
+Feature: NumImmig
+Variance = 0.0076
+Correlation = -0.1829
+Mutual Information = 0.0843
+
+Feature: PctLargHouseOccup
+Variance = 0.0364
+Correlation = -0.2205
+Mutual Information = 0.0819
+
+Feature: AsianPerCap
+Variance = 0.0382
+Correlation = 0.0653
+Mutual Information = 0.0806
+
+Feature: MedNumBR
+Variance = 0.0651
+Correlation = 0.1602
+Mutual Information = 0.0787
+
+Feature: PctImmigRec5
+Variance = 0.0445
+Correlation = -0.1037
+Mutual Information = 0.0743
+
+Feature: PctNotSpeakEnglWell
+Variance = 0.0483
+Correlation = -0.1819
+Mutual Information = 0.0737
+
+Feature: PctEmploy
+Variance = 0.0303
+Correlation = 0.2020
+Mutual Information = 0.0724
+
+Feature: PctHousOccup
+Variance = 0.0376
+Correlation = 0.1679
+Mutual Information = 0.0717
+
+Feature: PctOccupManu
+Variance = 0.0396
+Correlation = -0.1822
+Mutual Information = 0.0713
+
+Feature: MalePctNevMarr
+Variance = 0.0308
+Correlation = -0.1639
+Mutual Information = 0.0657
+
+Feature: whitePerCap
+Variance = 0.0349
+Correlation = 0.1026
+Mutual Information = 0.0652
+
+Feature: RentLowQ
+Variance = 0.0481
+Correlation = 0.1692
+Mutual Information = 0.0637
+
+Feature: indianPerCap
+Variance = 0.0272
+Correlation = 0.0966
+Mutual Information = 0.0636
+
+Feature: HispPerCap
+Variance = 0.0335
+Correlation = 0.1134
+Mutual Information = 0.0627
+
+Feature: PctImmigRec10
+Variance = 0.0380
+Correlation = -0.1407
+Mutual Information = 0.0623
+
+Feature: agePct12t29
+Variance = 0.0206
+Correlation = -0.0854
+Mutual Information = 0.0609
+
+Feature: agePct16t24
+Variance = 0.0277
+Correlation = -0.0633
+Mutual Information = 0.0595
+
+Feature: PctSameHouse85
+Variance = 0.0329
+Correlation = 0.0416
+Mutual Information = 0.0583
+
+Feature: PersPerOwnOccHous
+Variance = 0.0249
+Correlation = 0.0013
+Mutual Information = 0.0540
+
+Feature: PctForeignBorn
+Variance = 0.0534
+Correlation = -0.1053
+Mutual Information = 0.0516
+
+Feature: agePct12t21
+Variance = 0.0241
+Correlation = -0.0761
+Mutual Information = 0.0510
+
+Feature: OwnOccLowQuart
+Variance = 0.0504
+Correlation = 0.1328
+Mutual Information = 0.0504
+
+Feature: PctSpeakEnglOnly
+Variance = 0.0515
+Correlation = 0.1520
+Mutual Information = 0.0491
+
+Feature: PctRecentImmig
+Variance = 0.0556
+Correlation = -0.1254
+Mutual Information = 0.0488
+
+Feature: PersPerRentOccHous
+Variance = 0.0358
+Correlation = -0.1719
+Mutual Information = 0.0482
+
+Feature: PctImmigRecent
+Variance = 0.0480
+Correlation = -0.0788
+Mutual Information = 0.0469
+
+Feature: LemasPctOfficDrugUn
+Variance = 0.0578
+Correlation = -0.2133
+Mutual Information = 0.0469
+
+Feature: PctImmigRec8
+Variance = 0.0406
+Correlation = -0.1192
+Mutual Information = 0.0451
+
+Feature: PctRecImmig8
+Variance = 0.0560
+Correlation = -0.1334
+Mutual Information = 0.0426
+
+Feature: RentMedian
+Variance = 0.0438
+Correlation = 0.1484
+Mutual Information = 0.0391
+
+Feature: pctWWage
+Variance = 0.0335
+Correlation = 0.1583
+Mutual Information = 0.0381
+
+Feature: PctRecImmig10
+Variance = 0.0551
+Correlation = -0.1382
+Mutual Information = 0.0376
+
+Feature: pctWRetire
+Variance = 0.0281
+Correlation = 0.0899
+Mutual Information = 0.0367
+
+Feature: PopDens
+Variance = 0.0412
+Correlation = -0.1086
+Mutual Information = 0.0350
+
+Feature: OwnOccHiQuart
+Variance = 0.0553
+Correlation = 0.1040
+Mutual Information = 0.0342
+
+Feature: agePct65up
+Variance = 0.0321
+Correlation = -0.0064
+Mutual Information = 0.0331
+
+Feature: PctSameState85
+Variance = 0.0393
+Correlation = -0.0079
+Mutual Information = 0.0316
+
+Feature: PctRecImmig5
+Variance = 0.0559
+Correlation = -0.1322
+Mutual Information = 0.0316
+
+Feature: pctUrban
+Variance = 0.1979
+Correlation = -0.0153
+Mutual Information = 0.0312
+
+Feature: RentHighQ
+Variance = 0.0616
+Correlation = 0.1443
+Mutual Information = 0.0300
+
+Feature: OwnOccMedVal
+Variance = 0.0536
+Correlation = 0.1188
+Mutual Information = 0.0285
+
+Feature: communityname
+Variance = 276897.3144
+Correlation = 0.0114
+Mutual Information = 0.0256
+
+Feature: PctEmplManu
+Variance = 0.0410
+Correlation = 0.0168
+Mutual Information = 0.0251
+
+Feature: MedRent
+Variance = 0.0455
+Correlation = 0.1403
+Mutual Information = 0.0227
+
+Feature: PctWorkMom
+Variance = 0.0307
+Correlation = 0.1499
+Mutual Information = 0.0196
+
+Feature: PctUsePubTrans
+Variance = 0.0525
+Correlation = -0.0681
+Mutual Information = 0.0166
+
+Feature: fold
+Variance = 8.2581
+Correlation = 0.0044
+Mutual Information = 0.0138
+
+Feature: PersPerFam
+Variance = 0.0239
+Correlation = -0.1589
+Mutual Information = 0.0134
+
+Feature: PctEmplProfServ
+Variance = 0.0308
+Correlation = -0.0026
+Mutual Information = 0.0117
+
+Feature: householdsize
+Variance = 0.0268
+Correlation = -0.0642
+Mutual Information = 0.0110
+
+Feature: PctWorkMomYoungKids
+Variance = 0.0284
+Correlation = 0.0667
+Mutual Information = 0.0088
+
+Feature: LandArea
+Variance = 0.0120
+Correlation = -0.1545
+Mutual Information = 0.0083
+
+Feature: PctVacMore6Mos
+Variance = 0.0357
+Correlation = -0.0558
+Mutual Information = 0.0076
+
+Feature: MedYrHousBuilt
+Variance = 0.0540
+Correlation = 0.0757
+Mutual Information = 0.0051
+
+Feature: MedOwnCostPctIncNoMtg
+Variance = 0.0371
+Correlation = -0.0436
+Mutual Information = 0.0000
+
+Feature: MedOwnCostPctInc
+Variance = 0.0351
+Correlation = -0.0338
+Mutual Information = 0.0000
+
+Feature: PersPerOccupHous
+Variance = 0.0287
+Correlation = -0.0549
+Mutual Information = 0.0000
+
+Feature: PctBornSameState
+Variance = 0.0418
+Correlation = -0.0092
+Mutual Information = 0.0000
+
+Feature: PctSameCity85
+Variance = 0.0402
+Correlation = -0.0703
+Mutual Information = 0.0000
+
+Feature: racePctAsian
+Variance = 0.0436
+Correlation = 0.0114
+Mutual Information = 0.0000
+
+Feature: pctWFarmSelf
+Variance = 0.0417
+Correlation = 0.0470
+Mutual Information = 0.0000
+
+Feature: pctWSocSec
+Variance = 0.0301
+Correlation = -0.0576
+Mutual Information = 0.0000
+
+----------------------------------------------------------------------
+Allowed Mathematical Transformations
+----------------------------------------------------------------------
+
+You are encouraged to explore both linear and nonlinear feature transformations.
+
+Allowed operations include:
+
+Arithmetic:
+- addition (+)
+- subtraction (-)
+- multiplication (*)
+- division (/)
+
+Nonlinear transformations:
+- log(x)
+- sqrt(x)
+- power transforms (x^2, x^3)
+
+Interaction patterns:
+- multiplicative interactions (x * y)
+- normalized ratios (x / (x + y))
+- density measures (x / loc)
+
+Complexity amplification:
+- log-scaled ratios (log(x / y))
+- squared density terms ((x / loc)^2)
+
+Prefer meaningful nonlinear relationships that reveal hidden structural patterns.
+
+----------------------------------------------------------------------
+Instructions
+----------------------------------------------------------------------
+
+- Propose up to 10 statistically grounded derived features.
+- Use ONLY the provided original variables.
+- Do NOT rename original variables.
+- Output strictly in the format:
+Feature_Name | Feature_Name = <formula using existing columns>
