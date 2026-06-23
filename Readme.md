@@ -1,91 +1,91 @@
-# MileLLM: LLM-based Feature Engineering for Tabular Data
+# MileLLM
 
-## 📌 Overview
-
-This project implements a Large Language Model (LLM)-driven feature engineering framework for tabular data.  
-Given a raw dataset $\mathcal{D}$, the system automatically generates meaningful derived features using prompt-based reasoning, and evaluates them on downstream machine learning tasks.
-
----
-
-## 📂 Project Structure
+## Project Structure
 
 ```
 .
-├── config.py                 # global configuration (dataset, task type, paths, API key)
-├── main.py                   # entry point of the whole pipeline
-├── requirements.txt          # dependencies
-├── Readme.md                 # project documentation
+├── config.py                  # dataset, task type, evolution params
+├── main.py                    # entry point
+├── requirements.txt
 
-├── data/                     # datasets and metadata
-│   └── *.csv
+├── data/                      # CSV datasets
+├── prompt/                    # prompt templates per dataset (island1.txt, island2.txt, ...)
 
-├── prompt/                   # prompt templates for LLM
-│   └── pc1/
-│       ├── island1.txt
-│       ├── island2.txt
-│       └── island3.txt
+├── llm/
+│   ├── llm_client.py          # OpenAI API wrapper
+│   ├── prompt_builder.py      # prompt construction (prior + exemplar injection)
+│   └── feature_generator.py   # two-stage LLM feature generation
 
-├── llm/                      # LLM interaction module
-│   ├── llm_client.py         # API wrapper for LLM calls
-│   ├── prompt_builder.py     # construct prompts from dataset
-│   └── feature_generator.py  # generate new features via LLM
+├── pipeline/
+│   ├── island.py              # island state management (best program, stagnation, migration)
+│   ├── feature_pipeline.py    # execute LLM code, extract used features
+│   └── experiment.py          # evolution loop orchestration
 
-├── pipeline/                 # core pipeline logic
-│   ├── feature_pipeline.py   # feature generation + execution pipeline
-│   └── experiment.py         # experiment orchestration
+├── evaluation/
+│   ├── classifier.py          # XGBoost classifier (K-fold CV + final eval)
+│   ├── regressor.py           # XGBoost regressor (K-fold CV + final eval)
+│   └── __init__.py            # task-type routing
 
-├── evaluation/               # downstream model evaluation
-│   ├── classifier.py         # classification models & metrics
-│   └── regressor.py          # regression models & metrics
-
-├── utils/                    # utility functions
-│   ├── data_utils.py         # data loading / preprocessing
-│   └── feature_utils.py      # feature execution & transformation helpers
+└── utils/
+    ├── data_utils.py          # data loading, train/test split, statistics
+    └── feature_utils.py       # code safety fixes (division, log, sqrt)
 ```
 
----
-
-## ⚙️ Configuration
+## Configuration
 
 Edit `config.py`:
 
 ```python
-DATASET = "dataset"
-TASK_TYPE = "classification"
-
-DATA_PATH = f"data/{DATASET}.csv"
-PROMPT_DIR = f"prompt/{DATASET}"
+DATASET = "vehicle"              # dataset name
+TASK_TYPE = "classification"     # "classification" or "regression"
 
 API_KEY = "your_api_key"
+BASE_URL = "https://api.openai.com/v1"
+
+SHOT_SIZE = 64                   # training set size (few-shot setting)
+N_FOLDS = 5                      # cross-validation folds
+MAX_GENERATIONS = 5              # evolution generations (T)
+PROGRAMS_PER_GEN = 5             # programs per island per generation (m)
+STAGNATION_THRESHOLD = 2        # generations without improvement before migration (k)
 ```
 
----
-
-## 🚀 How to Run
-
-### 1. Install dependencies
+## How to Run
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. Run the pipeline
-
-```bash
 python main.py
 ```
 
----
+## Algorithm
 
-## 🔄 Workflow
+```
+Input:  Training set D_train, n islands, max generations T, m programs per generation
+Output: Best feature program x*
 
-$$
-\mathcal{D} \rightarrow \text{Prompt} \rightarrow \text{LLM} \rightarrow \phi(\mathbf{x}) \rightarrow \text{Model} \rightarrow \text{Evaluation}
-$$
+1. Compute statistical priors from D_train (variance, Pearson correlation, mutual information)
+2. Initialize n heterogeneous islands, each with a unique functional identity
+3. For generation = 1 to T:
+     For each island i:
+       For j = 1 to m:
+         Generate feature program via LLM (with exemplar feedback)
+         Evaluate fitness via K-fold CV on D_train
+       Update island best program
+       If stagnant for k generations: trigger cross-island migration
+4. Return global best program
+5. Report final performance on unseen test set
+```
 
-1. Load dataset  
-2. Build prompts from metadata  
-3. Generate candidate features via LLM  
-4. Execute feature transformation  
-5. Train downstream model  
-6. Evaluate performance  
+### Key Mechanisms
+
+- **Functional Identity**: Each island has a unique role (e.g., "geometric analyst", "mass composition analyst"), guiding LLM to explore different feature subspaces
+- **Statistical Priors**: Training-set-only statistics injected into prompts to ground LLM reasoning
+- **In-context Exemplars**: Best programs from previous generations fed back to LLM for iterative refinement
+- **Cross-island Migration**: When an island stagnates, best programs from other islands are injected as new exemplars
+
+## Evaluation Protocol
+
+- **Training set**: 64 samples (few-shot), **Test set**: remaining samples (isolated)
+- **Feature search**: K-fold CV on training set only
+- **Baseline**: All original features
+- **Enhanced**: Used original features (referenced by LLM code) + newly generated features
+- **Final report**: One-time evaluation on unseen test set

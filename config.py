@@ -1,11 +1,16 @@
-DATASET = "dataset"
-TASK_TYPE = "regression" # "classification" or "regression"
+DATASET = "vehicle"
+TASK_TYPE = "classification"
 
 DATA_PATH = f"data/{DATASET}.csv"
 PROMPT_DIR = f"prompt/{DATASET}"
 
-API_KEY = "your_api_key"
+API_KEY = ""
 BASE_URL = ""
 
 RANDOM_STATE = 42
 SHOT_SIZE = 64
+
+N_FOLDS = 5
+MAX_GENERATIONS = 10
+PROGRAMS_PER_GEN = 5
+STAGNATION_THRESHOLD = 2

@@ -1,148 +1,141 @@
 import os
-import pandas as pd
-
 from config import *
 from llm.feature_generator import FeatureGenerator
-from utils.data_utils import load_csv
-from utils.feature_utils import fix_division, fix_log
+from llm.prompt_builder import build_evolution_prompt
+from pipeline.island import Island, FeatureProgram
+from utils.data_utils import load_csv, split_train_test, compute_statistics
+from utils.feature_utils import safe_feature_code
 from pipeline.feature_pipeline import apply_llm_features
-from evaluation import evaluate
+from evaluation import evaluate_cv, evaluate_final
 
 
 def get_prompt_paths():
-    """
-    Return sorted list of prompt file paths.
-    """
-    return sorted([
-        os.path.join(PROMPT_DIR, f)
-        for f in os.listdir(PROMPT_DIR)
-        if f.endswith(".txt")
-    ])
+    return sorted([os.path.join(PROMPT_DIR, f) for f in os.listdir(PROMPT_DIR) if f.endswith(".txt")])
 
 
-def compute_improvement(baseline, score):
-    """
-    Compute improvement based on task type.
+def initialize_islands(prompt_paths):
+    islands = []
+    for i, path in enumerate(prompt_paths):
+        with open(path, "r", encoding="utf-8") as f:
+            template = f.read()
+        identity = _extract_identity(template)
+        islands.append(Island(i, identity, template))
+    return islands
 
-    For classification: higher is better.
-    For regression: lower is better (NRMSE).
-    """
-    if TASK_TYPE == "classification":
-        return score - baseline
-    elif TASK_TYPE == "regression":
-        return baseline - score
-    else:
-        raise ValueError(f"Unknown TASK_TYPE: {TASK_TYPE}")
+
+def _extract_identity(template):
+    for line in template.split("\n"):
+        line = line.strip()
+        if line.startswith("You are assigned the functional identity of"):
+            return line.replace("You are assigned the functional identity of ", "").rstrip(".")
+    return "Unknown"
+
+
+def generate_programs(island, stats, generator, generation):
+    programs = []
+    exemplars = island.get_all_exemplars()
+    for _ in range(PROGRAMS_PER_GEN):
+        try:
+            prompt = build_evolution_prompt(island.prompt_template, stats,
+                                            exemplars if exemplars else None, generation)
+            defs, code = generator.generate_features(prompt)
+            code = safe_feature_code(code)
+            programs.append({"defs": defs, "code": code, "error": None})
+        except Exception as e:
+            programs.append({"defs": None, "code": None, "error": str(e)})
+    return programs
+
+
+def evaluate_and_update(island, programs, df_train, label_col, generation):
+    for j, prog in enumerate(programs):
+        if prog["error"] is not None:
+            continue
+        try:
+            df_aug, _, _ = apply_llm_features(df_train.copy(), prog["code"], label_col)
+            cv_score, _ = evaluate_cv(df_aug, label_col)
+            fp = FeatureProgram(prog["defs"], prog["code"], cv_score, generation, island.island_id)
+            improved = island.update_best(fp)
+            tag = " *" if improved else ""
+            print(f"    [{j+1}] {cv_score:.4f}{tag}")
+        except Exception:
+            pass
+
+
+def check_and_migrate(islands):
+    for island in islands:
+        if island.is_stagnant():
+            migrants = [o.best_program for o in islands
+                        if o.island_id != island.island_id and o.best_program is not None]
+            if migrants:
+                island.add_external_exemplars(migrants)
+                print(f"  >> Island {island.island_id} migration ({len(migrants)} exemplars)")
+
+
+def find_global_best(islands):
+    best = None
+    for island in islands:
+        if island.best_program is not None:
+            if best is None or island.best_program.is_better_than(best.score):
+                best = island.best_program
+    return best
 
 
 def run_experiment():
-    """
-    Run LLM-based feature generation experiments.
+    print(f"MileLLM | {DATASET} | {TASK_TYPE} | train={SHOT_SIZE} | gen={MAX_GENERATIONS} | m={PROGRAMS_PER_GEN}")
 
-    Pipeline:
-        1. Evaluate baseline
-        2. Generate features using multiple prompts
-        3. Apply feature selection + augmentation
-        4. Evaluate model performance
-        5. Aggregate results
+    df_full = load_csv(DATA_PATH)
+    label_col = df_full.columns[-1]
+    df_train, df_test = split_train_test(df_full, label_col)
+    stats = compute_statistics(df_train, label_col)
 
-    Returns:
-        pd.DataFrame: Experiment results for all prompts.
-    """
-    print("=" * 50)
-    print(f"Dataset: {DATASET}")
-    print(f"Task: {TASK_TYPE}")
-    print("=" * 50)
+    baseline_cv, _ = evaluate_cv(df_train, label_col)
+    print(f"Baseline CV: {baseline_cv:.4f} | train={len(df_train)} test={len(df_test)}")
 
-    prompt_paths = get_prompt_paths()
-    print("Prompts:", prompt_paths)
-
-    df_base = load_csv(DATA_PATH)
-    label_col = df_base.columns[-1]
-
-    baseline_score = evaluate(df_base, label_col)
-
-    print("\n=== Baseline ===")
-    print("Score:", baseline_score)
-
+    islands = initialize_islands(get_prompt_paths())
     generator = FeatureGenerator(API_KEY, BASE_URL)
 
-    results = []
+    for gen in range(1, MAX_GENERATIONS + 1):
+        print(f"\n--- Gen {gen}/{MAX_GENERATIONS} ---")
+        for island in islands:
+            print(f"  [Island {island.island_id}]")
+            programs = generate_programs(island, stats, generator, gen)
+            evaluate_and_update(island, programs, df_train, label_col, gen)
+            island.end_generation()
+            island.clear_external_exemplars()
+        check_and_migrate(islands)
 
-    for prompt_path in prompt_paths:
+        best = find_global_best(islands)
+        if best:
+            scores = " | ".join([f"I{i.best_program.score:.4f}" if i.best_program else f"I{i.island_id}:N/A"
+                                 for i in islands])
+            print(f"  Best: I{best.island_id} {best.score:.4f} | {scores}")
 
-        print("\n" + "=" * 50)
-        print("Running:", os.path.basename(prompt_path))
-        print("=" * 50)
+    global_best = find_global_best(islands)
+    if not global_best:
+        print("No valid program found.")
+        return None
 
-        try:
-            df = load_csv(DATA_PATH)
+    print(f"\n{'='*50}")
+    print(f"Best: Island {global_best.island_id} | Gen {global_best.generation} | CV: {global_best.score:.4f}")
+    if TASK_TYPE == "classification":
+        print(f"Improvement: {global_best.score - baseline_cv:.4f}")
+    else:
+        print(f"Improvement: {baseline_cv - global_best.score:.4f}")
+    print(f"\n{global_best.feature_defs}")
+    print(f"\n{global_best.feature_code}")
 
-            with open(prompt_path, "r", encoding="utf-8") as f:
-                prompt = f.read()
+    # Final evaluation on unseen test set
+    df_train_final, _, _ = apply_llm_features(df_train.copy(), global_best.feature_code, label_col)
+    df_test_final, _, _ = apply_llm_features(df_test.copy(), global_best.feature_code, label_col)
 
-            feature_defs, feature_code = generator.generate_features(prompt)
-            feature_code = fix_division(feature_code)
-            feature_code = fix_log(feature_code)
-
-            print("\nGenerated Features:")
-            print(feature_defs)
-
-            print("\nGenerated Feature Code (Stage 2):")
-            print(feature_code)
-
-            df, new_cols, used_cols = apply_llm_features(
-                df, feature_code, label_col
-            )
-
-            print("New Features:", new_cols)
-            print("Used Features:", used_cols)
-
-            score = evaluate(df, label_col)
-            improvement = compute_improvement(baseline_score, score)
-
-            print("\nResult:")
-            print("Score:", score)
-            print("Improvement:", improvement)
-
-            results.append({
-                "prompt": os.path.basename(prompt_path),
-                "score": score,
-                "improvement": improvement,
-                "num_features": len(df.columns) - 1,
-                "num_new_features": len(new_cols),
-                "num_used_features": len(used_cols)
-            })
-
-        except Exception as e:
-            print("\nError in prompt:", prompt_path)
-            print("Error:", str(e))
-
-            results.append({
-                "prompt": os.path.basename(prompt_path),
-                "score": None,
-                "improvement": None,
-                "num_features": None,
-                "num_new_features": None,
-                "num_used_features": None,
-                "error": str(e)
-            })
-
-    print("\n" + "=" * 50)
-    print("FINAL RESULTS")
-    print("=" * 50)
-
-    results_df = pd.DataFrame(results)
+    baseline_test = evaluate_final(df_train, df_test, label_col)
+    final_test = evaluate_final(df_train_final, df_test_final, label_col)
 
     if TASK_TYPE == "classification":
-        results_df = results_df.sort_values(by="score", ascending=False)
+        imp = final_test - baseline_test
     else:
-        results_df = results_df.sort_values(by="score", ascending=True)
+        imp = baseline_test - final_test
 
-    print(
-        results_df
-        .round(4)
-        .to_string(index=False)
-    )
+    print(f"\nTest: baseline={baseline_test:.4f} enhanced={final_test:.4f} improvement={imp:.4f}")
 
-    return results_df
+    return global_best
